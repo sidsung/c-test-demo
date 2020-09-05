@@ -43,7 +43,7 @@ typedef struct
     int power_use_hour[13][32][25]; // 某年某月某日 每小时用电量
     int power_use_day[13][32];      // 某年某月 每日用电量
     int power_use_month[13];        // 某年 每月用电量
-} power_use_s; // 电量计量
+} power_use_s;                      // 电量计量
 
 power_use_s power_use = {
     .power_use_hour = {0},
@@ -51,28 +51,38 @@ power_use_s power_use = {
     .power_use_month = {0},
 };
 
-int main()
+localtime_s local_date;
+
+int get_all_power_use(power_use_s *power_use)
 {
-    localtime_s local_date;
     get_local_time(&local_date);
     printf("%d-%d-%d\n", local_date.year, local_date.month, local_date.day);
 
-    power_use.power_use_day[local_date.month][local_date.day] = 50;
-    power_use.power_use_day[local_date.month][6] = 50;
-    power_use.power_use_hour[9][5][24] = 11;
+    power_use->power_use_day[local_date.month][local_date.day] = 50;
+    power_use->power_use_day[local_date.month][6] = 50;
+    power_use->power_use_hour[9][5][24] = 11;
 
     for (int i = 0; i < 25; i++)
     {
-        power_use.power_use_day[local_date.month][local_date.day] += 
-        power_use.power_use_hour[local_date.month][local_date.day][i];
+        power_use->power_use_day[local_date.month][local_date.day] +=
+            power_use->power_use_hour[local_date.month][local_date.day][i];
     }
 
     for (int i = 0; i < 32; i++)
     {
-        power_use.power_use_month[local_date.month] += power_use.power_use_day[local_date.month][i];
+        power_use->power_use_month[local_date.month] += power_use->power_use_day[local_date.month][i];
     }
 
-    printf("%d-%d's all power use is %d\n", local_date.year, local_date.month, power_use.power_use_month[local_date.month]);
+    printf("%d-%d's all power use is %d\n", local_date.year, local_date.month, power_use->power_use_month[local_date.month]);
+
+    return 0;
+}
+
+int main()
+{
+    get_all_power_use(&power_use);
+
+    printf("this month's all power use is %d\n", power_use.power_use_month[local_date.month]);
 
     return 0;
 }
