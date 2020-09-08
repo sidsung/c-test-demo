@@ -26,7 +26,7 @@ void UTCToBeijing(unsigned int UTCyear, unsigned char UTCmonth, unsigned char UT
     year = UTCyear;
     month = UTCmonth;
     day = UTCday;
-    hour = UTChour - 7; //UTC+8转换为北京时间
+    hour = UTChour + 8; //UTC+8转换为北京时间
 
     if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
     {
@@ -76,11 +76,79 @@ void UTCToBeijing(unsigned int UTCyear, unsigned char UTCmonth, unsigned char UT
     printf("hour : %d\n", hour);
 }
 
+/*
+BJT->UTC
+*/
+int BJT_to_UTC(void)
+{
+    int BJT, UTC;
+    int hour;
+    int minute;
+    int u_hour, u_minute;
+    scanf("%d", &BJT);
+    if (BJT < 0 || BJT > 2359)
+        return -1;
+    if (BJT >= 100)
+    {
+        hour = BJT / 100;
+        minute = BJT % 100;
+        if (hour >= 8)
+        {
+            u_hour = hour - 8;
+        }
+        else
+        {
+            u_hour = 24 - (8 - hour);
+        }
+        u_minute = minute;
+    }
+    else
+    {
+        u_hour = 16;
+        u_minute = BJT;
+    }
+    if (u_hour > 0 && u_minute >= 10)
+    {
+        printf("%d%d", u_hour, u_minute);
+    }
+    else if (u_hour == 0)
+    {
+        printf("%d", u_minute);
+    }
+    else if (u_hour != 0 && u_minute < 10)
+    {
+        printf("%d%d%d", u_hour, 0, u_minute);
+    }
+    return 0;
+}
+
+typedef struct
+{
+    char ms[20];
+    char date[80];
+    char random[20];
+} sys_timestamp_t;
+
+sys_timestamp_t stamp = {};
+
+int sys_time_utc_date_get(void)
+{
+    char utc_time_buf[20] = {0};
+    time_t utc_tim;
+    time(&utc_tim);
+    struct tm *p_time = gmtime(&utc_tim);
+    strftime(utc_time_buf, sizeof(utc_time_buf), "%Y%m%d%H", p_time);
+
+    return atoi(utc_time_buf);
+}
+
 int main()
 {
     // printf("%d", get_time());
 
-    UTCToBeijing(0, 9, 3, 12, 38, 0);
+    // UTCToBeijing(0, 9, 3, 5, 38, 0);
+
+    printf("%d\n", sys_time_utc_date_get());
 
     return 0;
 }

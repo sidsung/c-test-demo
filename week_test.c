@@ -8,6 +8,8 @@ typedef struct week_test
     int year;
     int month;
     int day;
+    int hour;
+    int week;
 } localtime_s;
 
 /**
@@ -19,6 +21,7 @@ uint32_t get_local_time(localtime_s *local_date)
     char ctime_buf_y[20] = "";
     char ctime_buf_m[20] = "";
     char ctime_buf_d[20] = "";
+    char ctime_buf_h[20] = "";
 
     time(&tim);
     // strftime(ctime_buf, 20, "%Y%m%d", localtime(&tim));
@@ -30,8 +33,15 @@ uint32_t get_local_time(localtime_s *local_date)
 
     strftime(ctime_buf_d, 20, "%d", localtime(&tim));
     local_date->day = atoi(ctime_buf_d);
+
+    strftime(ctime_buf_h, 20, "%H", localtime(&tim));
+    local_date->hour = atoi(ctime_buf_h);
+
+    struct tm *date = gmtime(&tim);
+    local_date->week = date->tm_wday;
     
-    printf("%d - %d - %d\n", local_date->year, local_date->month, local_date->day);
+    printf("%d - %d - %d - %d\n", local_date->year, local_date->month, local_date->day, local_date->hour);
+    printf("week : %d\n", local_date->week);
 
     return 0;
 }

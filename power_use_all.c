@@ -40,7 +40,7 @@ uint32_t get_local_time(localtime_s *local_date)
 
 typedef struct
 {
-    int power_use_hour[13][32][25]; // 某年某月某日 每小时用电量
+    int power_use_hour[13][32][24]; // 某年某月某日 每小时用电量
     int power_use_day[13][32];      // 某年某月 每日用电量
     int power_use_month[13];        // 某年 每月用电量
 } power_use_s;                      // 电量计量
@@ -60,9 +60,9 @@ int get_all_power_use(power_use_s *power_use)
 
     power_use->power_use_day[local_date.month][local_date.day] = 50;
     power_use->power_use_day[local_date.month][6] = 50;
-    power_use->power_use_hour[9][5][24] = 11;
+    power_use->power_use_hour[9][7][23] = 11;
 
-    for (int i = 0; i < 25; i++)
+    for (int i = 0; i < 24; i++)
     {
         power_use->power_use_day[local_date.month][local_date.day] +=
             power_use->power_use_hour[local_date.month][local_date.day][i];
