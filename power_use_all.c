@@ -80,9 +80,20 @@ int get_all_power_use(power_use_s *power_use)
 
 int main()
 {
-    get_all_power_use(&power_use);
+    // get_all_power_use(&power_use);
 
-    printf("this month's all power use is %d\n", power_use.power_use_month[local_date.month]);
+    // printf("this month's all power use is %d\n", power_use.power_use_month[local_date.month]);
+
+    int p[32][24] = {0};
+
+    memset(&power_use.power_use_hour[1], 0, sizeof(power_use.power_use_hour[1]));
+
+    printf("%ld\n", sizeof(power_use.power_use_hour[1]));
+
+    for (int i = 0; i < 24; i++)
+    {
+        printf("%d\n", power_use.power_use_hour[1][1][i]);
+    }
 
     return 0;
 }
