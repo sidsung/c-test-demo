@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "cstdlib": "cpp"
-    }
+        "cstdlib": "cpp",
+        "atomic": "cpp",
+        "cstdint": "cpp"
+    },
+    "cmake.configureOnOpen": true
 }

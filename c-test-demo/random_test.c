@@ -12,4 +12,6 @@ int main()
         int a = rand() % 100;
         printf("%d : %d\n", i, a);
     }
+
+    return 0;
 }
