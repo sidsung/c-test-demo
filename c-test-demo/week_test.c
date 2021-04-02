@@ -17,13 +17,13 @@ typedef struct week_test
  */
 uint32_t get_local_time(localtime_s *local_date)
 {
-    time_t tim;
+    time_t tim = 1610925971;
     char ctime_buf_y[20] = "";
     char ctime_buf_m[20] = "";
     char ctime_buf_d[20] = "";
     char ctime_buf_h[20] = "";
 
-    time(&tim);
+    // time(&tim);
     // strftime(ctime_buf, 20, "%Y%m%d", localtime(&tim));
     strftime(ctime_buf_y, 20, "%Y", localtime(&tim));
     local_date->year = atoi(ctime_buf_y);
@@ -66,19 +66,19 @@ int main()
     localtime_s local_date;
     get_local_time(&local_date);
 
-    yr = local_date.year;
-    mn = local_date.month;
-    day = local_date.day;
+    // yr = local_date.year;
+    // mn = local_date.month;
+    // day = local_date.day;
 
-    if (yr % 4 == 0 || yr % 100 == 0 || yr % 400 == 0)
-        mont[2] = 29;
-    else
-        mont[2] = 28;
-    for (i = 0; i < mn; i++)
-        days += mont[i];
-    days += day;
-    s = yr - 1 + (int)((yr - 1) / 4) - (int)((yr - 1) / 100) + (int)((yr - 1) / 400) + days;
-    k = s % 7;
-    printf("%d-%d-%d is %d.\n", yr, mn, day, wek[k]);
-    return 0;
+    // if (yr % 4 == 0 || yr % 100 == 0 || yr % 400 == 0)
+    //     mont[2] = 29;
+    // else
+    //     mont[2] = 28;
+    // for (i = 0; i < mn; i++)
+    //     days += mont[i];
+    // days += day;
+    // s = yr - 1 + (int)((yr - 1) / 4) - (int)((yr - 1) / 100) + (int)((yr - 1) / 400) + days;
+    // k = s % 7;
+    // printf("%d-%d-%d is %d.\n", yr, mn, day, wek[k]);
+    // return 0;
 }

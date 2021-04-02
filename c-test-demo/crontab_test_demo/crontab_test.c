@@ -9,7 +9,7 @@
 typedef struct
 {
     char crontab_minute[60]; /* 0-59                                 */
-    char crontab_hour[24];   /* 0-23                                 */
+    char hour[24];   /* 0-23                                 */
     char crontab_day[32];    /* 0-31                                 */
     char crontab_month[12];  /* 0-11                                 */
     char crontab_week[8];    /* 0-6, beginning sunday                */
@@ -46,31 +46,31 @@ int pro_crontab(char crontab_input[], crontab_s *time_rule, crontab_result_s *ti
     }
 
     strncpy(time_rule->crontab_minute, crontab_input, sub_min);
-    strncpy(time_rule->crontab_hour, crontab_input + sub_min + 1, sub_hour - sub_min - 1);
+    strncpy(time_rule->hour, crontab_input + sub_min + 1, sub_hour - sub_min - 1);
     strncpy(time_rule->crontab_day, crontab_input + sub_hour + 1, sub_day - sub_hour - 1);
     strncpy(time_rule->crontab_month, crontab_input + sub_day + 1, sub_month - sub_day - 1);
     strcpy(time_rule->crontab_week, crontab_input + sub_month + 1);
 #if PRINT_DEBUG
-    printf("crontab_minute : %s\ncrontab_hour : %s\ncrontab_day : %s\ncrontab_month : %s\ncrontab_week : %s\n",
-           time_rule->crontab_minute, time_rule->crontab_hour, time_rule->crontab_day, time_rule->crontab_month, time_rule->crontab_week);
+    printf("crontab_minute : %s\nhour : %s\ncrontab_day : %s\ncrontab_month : %s\ncrontab_week : %s\n",
+           time_rule->crontab_minute, time_rule->hour, time_rule->crontab_day, time_rule->crontab_month, time_rule->crontab_week);
 #endif
 
     // char rule[10] = {0};
     // strcat(rule, time_rule.crontab_month);
     // strcat(rule, time_rule.crontab_day);
-    // strcat(rule, time_rule.crontab_hour);
+    // strcat(rule, time_rule.hour);
     // strcat(rule, time_rule.crontab_minute);
     // printf("****************************************************************************%s\n", rule);
     // printf("******************************************%d\n", atoi(rule));
 
     /*     crontab_result_s time_rule_result = {
         .crontab_result_minute = atoi(time_rule.crontab_minute),
-        .crontab_result_hour = atoi(time_rule.crontab_hour),
+        .crontab_result_hour = atoi(time_rule.hour),
         .crontab_result_day = atoi(time_rule.crontab_day),
         .crontab_result_month = atoi(time_rule.crontab_month),
     }; */
     time_rule_result->crontab_result_minute = atoi(time_rule->crontab_minute);
-    time_rule_result->crontab_result_hour = atoi(time_rule->crontab_hour);
+    time_rule_result->crontab_result_hour = atoi(time_rule->hour);
     time_rule_result->crontab_result_day = atoi(time_rule->crontab_day);
     time_rule_result->crontab_result_month = atoi(time_rule->crontab_month);
 
@@ -81,7 +81,7 @@ int pro_crontab(char crontab_input[], crontab_s *time_rule, crontab_result_s *ti
 #endif
 
     int comma_sub_flag = 0;
-    char week_sub_num[6] = {0};
+    char week_sub_num[8] = {0};
     for (int i = 0; i < strlen(time_rule->crontab_week); i++)
     {
         if (',' != time_rule->crontab_week[i])
@@ -138,18 +138,18 @@ int date_get(crontab_s *time_rule)
     int timeZone = 800;
     int autoTime = 0;
 
-    printf("time_rule.crontab_hour = %s\n", time_rule->crontab_hour);
+    printf("time_rule.hour = %s\n", time_rule->hour);
     printf("time_rule.crontab_minute = %s\n", time_rule->crontab_minute);
 
     int rule_len = 61;
     char rule[rule_len]; // 目前只设置小时和分钟
     // strcat(rule, time_rule.crontab_month);
     // strcat(rule, time_rule.crontab_day);
-    // strcat(rule, time_rule->crontab_hour);
+    // strcat(rule, time_rule->hour);
     // strcat(rule, time_rule->crontab_minute);
 
     int len = 0;
-    len += snprintf(rule + len, rule_len - len, "%s", time_rule->crontab_hour);
+    len += snprintf(rule + len, rule_len - len, "%s", time_rule->hour);
     if (atoi(time_rule->crontab_minute) < 10)
         len += snprintf(rule + len, rule_len - len, "0%s", time_rule->crontab_minute);
     else
@@ -169,7 +169,7 @@ int date_get(crontab_s *time_rule)
 
 int main(void)
 {
-    char crontab[] = "0 1 * * 0";
+    char crontab[] = "* * * * 0,1,2,3,4,5,6";
     // char crontab[] = {"* * * * 1,3,5,7,9"};
     crontab_result_s time_rule_result;
     int week_num = 0;
