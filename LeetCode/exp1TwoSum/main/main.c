@@ -18,48 +18,39 @@
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 
-// #include "preConfig.h"
-// #include "../../pre_config/pre_config.h"
-#include "D:\1A.My Program Files\vscode workspace\c-test-demo\pre_config\pre_config.h"
+#include "pre_config.h"
+// #include "../../../pre_config/pre_config.h"
 
 static const char *TAG = "towSum";
 
-hl_result_e towSum(int nums[], size_t numSize, int target, int out[2])
+// hl_result_e twoSum(int nums[], size_t numsSize, int target, int returnSize[2])
+int* twoSum(int* nums, int numsSize, int target, int* returnSize)
 {
-    if ((NULL == nums) || (NULL == out) || (numSize != sizeof(&nums)))
-    {
-        hlLogError("params error");
-        return HL_FAIL;
-    }
-
-    int outOne, outTwo = 0;
-
     int i, j = 0;
-    for (i = 0; i < numSize - i; i++)
+    for (i = 0; i < numsSize - i; i++)
     {
-        for (j = i + 1; j < numSize - j; j++)
+        for (j = i + 1; j < numsSize - j; j++)
         {
             if ((nums[i] + nums[j]) == target)
             {
-                out[0] = i;
-                out[1] = j;
-                return HL_OK;
+                returnSize[0] = i;
+                returnSize[1] = j;
+                break;
             }
         }
     }
-    hlLogError("no factors sum to be target");
 
-    return HL_FAIL;
+    return returnSize;
 }
 
 int main()
 {
-    int nums[] = {2, 7, 11, 15};
-    int target = 9;
-    int out[2] = {};
+    int nums[] = {3,3};
+    int target = 6;
+    int returnSize[2] = {};
 
-    HL_CHECK_ERROR(towSum(nums, sizeof(nums), target, out));
+    twoSum(nums, sizeof(nums), target, returnSize);
 
-    hlLogInfo("result[%d, %d]", out[0], out[1]);
+    printf("result[%d, %d]\n", returnSize[0], returnSize[1]);
     return 0;
 }

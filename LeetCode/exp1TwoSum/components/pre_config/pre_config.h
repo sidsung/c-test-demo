@@ -7,6 +7,7 @@
 #include "stdint.h"
 #include "stdlib.h"
 #include "assert.h"
+#include <unistd.h>
 
 typedef enum
 {
@@ -40,7 +41,7 @@ typedef enum
         {                                                              \
             printf("file: \"%s\" line %d\nfunc: %s\nexpression: %s\n", \
                    __FILE__, __LINE__, __ASSERT_FUNC, #functionCall);  \
-            system("pause");                                           \
+            pause();                                                   \
         }                                                              \
     }
 

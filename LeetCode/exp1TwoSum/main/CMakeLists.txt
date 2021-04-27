@@ -1,0 +1,4 @@
+# 指定生成目标
+ADD_EXECUTABLE(twoSum main.c)
+
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
