@@ -1,24 +1,20 @@
 # CMake 最低版本号要求
-CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 # 项目信息
 PROJECT(twoSum)
-
-# ADD_SUBDIRECTORY(src bin)
 
 # 查找当前目录下的所有源文件
 # 并将名称保存到 DIR_SRCS 变量
 AUX_SOURCE_DIRECTORY(. DIR_SRCS)
 
 # 添加头文件路径
-INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}/components/pre_config")
+INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}/pre_config")
 
-# 添加 components/pre_config 子目录
-ADD_SUBDIRECTORY(components/pre_config)
+# 添加子目录
+ADD_SUBDIRECTORY(pre_config)
+ADD_SUBDIRECTORY(main)
 
-# 添加链接库
-TARGET_LINK_LIBRARIES(twoSum PreConfigLib)
-
-
+# 打印编译文件路径及源文件路径
 MESSAGE(STATUS "This is BINARY dir " ${PROJECT_BINARY_DIR})
 MESSAGE(STATUS "This is SOURCE dir " ${PROJECT_SOURCE_DIR})
