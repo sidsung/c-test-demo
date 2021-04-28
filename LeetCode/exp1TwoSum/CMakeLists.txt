@@ -6,13 +6,13 @@ PROJECT(twoSum)
 
 # 查找当前目录下的所有源文件
 # 并将名称保存到 DIR_SRCS 变量
-AUX_SOURCE_DIRECTORY(. DIR_SRCS)
+# AUX_SOURCE_DIRECTORY(. DIR_SRCS)
 
 # 添加头文件路径
-INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}/pre_config")
+# INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}/include")
+INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}/../components/pre_config")
 
 # 添加子目录
-ADD_SUBDIRECTORY(pre_config)
 ADD_SUBDIRECTORY(main)
 
 # 打印编译文件路径及源文件路径
