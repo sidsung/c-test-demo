@@ -7,6 +7,7 @@
 #include "stdint.h"
 #include "stdlib.h"
 #include "assert.h"
+#include <unistd.h>
 
 typedef enum
 {
@@ -40,7 +41,7 @@ typedef enum
         {                                                              \
             printf("file: \"%s\" line %d\nfunc: %s\nexpression: %s\n", \
                    __FILE__, __LINE__, __ASSERT_FUNC, #functionCall);  \
-            system("pause");                                           \
+            pause();                                                   \
         }                                                              \
     }
 
@@ -53,6 +54,16 @@ typedef enum
         if (HL_OK != hlResult)                 \
             return hlResult;                   \
     }
+
+/* 自定义log颜色 */
+#define HL_LOG_COLOR_BLACK "\033[;30m"
+#define HL_LOG_COLOR_RED "\033[;31m"
+#define HL_LOG_COLOR_GREEN "\033[;32m"
+#define HL_LOG_COLOR_BROWN "\033[;33m"
+#define HL_LOG_COLOR_BLUE "\033[;34m"
+#define HL_LOG_COLOR_PURPLE "\033[;35m"
+#define HL_LOG_COLOR_CYAN "\033[;36m"
+#define HL_LOG_RESET_COLOR "\033[0m"
 
 /**
  * @brief 设置log打印等级，默认DEBUG等级
@@ -71,7 +82,7 @@ log_level_e pre_config_get_log_level(void);
     {                                                      \
         printf("[%s %s %d]", TAG, __FUNCTION__, __LINE__); \
         printf(info);                                      \
-        printf("\n");                                      \
+        printf(HL_LOG_RESET_COLOR "\n");                   \
     }
 
 /**
@@ -81,6 +92,7 @@ log_level_e pre_config_get_log_level(void);
     {                                                \
         if (LOG_DEBUG >= pre_config_get_log_level()) \
         {                                            \
+            printf(HL_LOG_RESET_COLOR);              \
             printf("[DEBUG]");                       \
             hlLogPrint(info);                        \
         }                                            \
@@ -93,6 +105,7 @@ log_level_e pre_config_get_log_level(void);
     {                                               \
         if (LOG_INFO >= pre_config_get_log_level()) \
         {                                           \
+            printf(HL_LOG_COLOR_GREEN);             \
             printf("[INFO]");                       \
             hlLogPrint(info);                       \
         }                                           \
@@ -105,6 +118,7 @@ log_level_e pre_config_get_log_level(void);
     {                                                  \
         if (LOG_WARNING >= pre_config_get_log_level()) \
         {                                              \
+            printf(HL_LOG_COLOR_BROWN);                \
             printf("[WARNING]");                       \
             hlLogPrint(info);                          \
         }                                              \
@@ -117,6 +131,7 @@ log_level_e pre_config_get_log_level(void);
     {                                                \
         if (LOG_ERROR >= pre_config_get_log_level()) \
         {                                            \
+            printf(HL_LOG_COLOR_RED);                \
             printf("[ERROR]");                       \
             hlLogPrint(info);                        \
         }                                            \

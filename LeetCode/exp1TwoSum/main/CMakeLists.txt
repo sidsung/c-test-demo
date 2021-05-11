@@ -1,0 +1,13 @@
+AUX_SOURCE_DIRECTORY(. DIR_MAIN_SRCS)
+
+#添加静态库目录
+LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/../lib/pre_config)
+
+# 指定生成目标
+ADD_EXECUTABLE(twoSum ${DIR_MAIN_SRCS})
+
+# 添加链接库
+TARGET_LINK_LIBRARIES(twoSum libPreConfigLibStatic.a)
+
+# 设置生成的可执行程序存放位置
+SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR})
